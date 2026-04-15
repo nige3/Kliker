@@ -1,203 +1,94 @@
-# 🖱️ Kliker
+# 🖱️ Kliker - Auto Clicker
 
-A modern, production-ready auto-clicker built with Python.  
-Designed for speed, precision, and ease of use, this tool provides powerful mouse automation with a clean GUI and global hotkey control.
+A fast, precise auto-clicker with global hotkey support and modern GUI. No configuration needed.
 
-Works out-of-the-box with zero configuration.
+## ⚡ Quick Start
 
----
-
-## ⚡ Features
-
-- Left, right, and middle mouse click support  
-- Adjustable click interval (milliseconds precision)  
-- Configurable click count (or infinite loop)  
-- Global hotkeys (works in background)  
-- Start / Stop / Toggle controls  
-- Emergency stop (ESC key)  
-- Real-time status indicator (Idle / Running)  
-- Multithreaded (no UI freezing)  
-- Lightweight and fast  
-
----
-
-## 🔁 Modes
-
-### 1. Realtime Clicking Mode
-- Clicks at current cursor position  
-- Ideal for games, repetitive tasks  
-
-### 2. Sequence Playback Mode
-- Record click positions  
-- Replay them in exact order  
-- Useful for automation workflows and testing  
-
----
-
-## 🎯 Use Cases
-
-- Game automation (idle games, farming)  
-- UI / UX testing  
-- Data entry automation  
-- Repetitive workflows  
-
----
-
-## 🛠️ Installation & Setup
-
-### Prerequisites
-- Python 3.8 or higher
-- pip (Python package installer)
-
-### Install Dependencies
 ```bash
+# Install dependencies
 pip install -r requirements.txt
-```
 
-### Run the Application
-```bash
+# Run
 python kliker.py
-```
 
-### Test Installation
-```bash
+# Test
 python test.py
 ```
 
-Or run the validation script:
-```bash
-python validate.py
+## 🎯 Features
+
+- **Realtime Mode**: Click at current position (games, automation)
+- **Sequence Mode**: Record and replay click positions
+- **Global Hotkey**: Control from any window (F6 = default start/stop)
+- **Multiple Buttons**: Left, right, middle click support
+- **Advanced Settings**: Patterns, randomization, custom intervals
+- **Thread-Safe**: No UI freezing during clicking
+- **Emergency Stop**: Press ESC anytime
+
+## 📖 Usage
+
+### Realtime Clicking
+1. Set interval (ms) and click count (0 = infinite)
+2. Position your mouse
+3. Press F6 to start / stop
+
+### Sequence Playback
+1. Click "Record"
+2. Click positions on screen
+3. Click "Stop Recording"
+4. Press F6 to playback
+
+## ⚙️ Configuration
+
+Settings auto-save to `kliker_config.json`. Edit manually for custom configs.
+
+```json
+{
+  "interval": 100,
+  "count": 0,
+  "button": "left",
+  "hotkey": "f6",
+  "randomization": 10,
+  "pattern": "linear",
+  "sound_enabled": true,
+  "theme": "light"
+}
 ```
 
-### Expected Results
-- **With Display (GUI environment)**: All tests pass ✅
-- **Headless environment**: pynput shows warning ⚠️ (normal - requires X11)
-- **Core functionality**: Always works ✅
+## 🏗️ Build Standalone Executable
 
-That's it! The application will launch with a clean GUI ready to use.
+```bash
+pip install pyinstaller
+pyinstaller --onefile --windowed kliker.py
+```
 
----
+Output: `dist/kliker.exe` (Windows) or `dist/kliker` (Linux/macOS)
 
-## 📖 Usage Guide
+## 🛠️ Technical Stack
 
-### Basic Operation
-1. **Select Mode**: Choose between "Realtime Clicking" or "Sequence Playback"
-2. **Configure Settings**:
-   - **Interval**: Time between clicks in milliseconds (minimum 10ms)
-   - **Click Count**: Number of clicks (0 = infinite until stopped)
-   - **Mouse Button**: Left, right, or middle click
-   - **Hotkey**: Key to start/stop (default: F6, restart required to change)
-3. **Start Clicking**: Click "▶ Start" or press your hotkey
-4. **Stop**: Click "⏹ Stop", press hotkey again, or press ESC for emergency stop
+- **GUI**: tkinter (built-in)
+- **Automation**: pynput
+- **Threading**: Multithreaded (responsive UI)
+- **Type Hints**: 100% covered, IDE-friendly
+- **Documentation**: In-code + QUICKSTART.md + ARCHITECTURE.md
 
-### Realtime Mode
-- Clicks repeatedly at your current mouse cursor position
-- Perfect for games or repetitive clicking tasks
+## 📚 Documentation
 
-### Sequence Mode
-1. **Record**: Click "⏺ Record" then click positions on screen
-2. **Stop Recording**: Click "⏹ Stop Recording" when done
-3. **Playback**: Click "▶ Start" to replay the sequence
-4. **Clear**: Use "🗑 Clear" to reset recorded positions
+- **QUICKSTART.md** - Full user guide with examples
+- **ARCHITECTURE.md** - Technical design and extension points
+- **LICENSE** - MIT license
 
-### Presets
-- **Single Click**: 1000ms interval, 1 click
-- **Double Click**: 100ms interval, 2 clicks  
-- **Rapid Fire**: 50ms interval, infinite clicks
+## 🔒 Safety
 
-### Safety Features
-- **ESC Key**: Emergency stop at any time
-- **Visual Indicator**: Red background when running
-- **Status Display**: Shows current state clearly
-
----
-
-## 🏗️ Building Standalone Executable
-
-Kliker can be compiled into a standalone executable that runs without Python installed.
-
-### Using PyInstaller
-
-1. **Install PyInstaller**:
-   ```bash
-   pip install pyinstaller
-   ```
-
-2. **Create Executable**:
-   ```bash
-   pyinstaller --onefile --windowed --name=Kliker kliker.py
-   ```
-
-3. **Find the Executable**:
-   - Windows: `dist/Kliker.exe`
-   - macOS: `dist/Kliker.app`
-   - Linux: `dist/Kliker`
-
-### Alternative: cx_Freeze
-
-1. **Install cx_Freeze**:
-   ```bash
-   pip install cx-Freeze
-   ```
-
-2. **Create setup.py**:
-   ```python
-   from cx_Freeze import setup, Executable
-
-   setup(
-       name="Kliker",
-       version="1.0",
-       description="Auto Clicker Application",
-       executables=[Executable("kliker.py")],
-   )
-   ```
-
-3. **Build**:
-   ```bash
-   python setup.py build
-   ```
-
----
-
-## 🔧 Technical Details
-
-### Libraries Used
-- **pynput**: Low-level mouse and keyboard control
-- **tkinter**: GUI framework (built-in Python)
-- **threading**: Multithreaded operation for responsive UI
-
-### Architecture
-- **Main Thread**: GUI and user interaction
-- **Click Thread**: Mouse automation (separate to prevent UI freezing)
-- **Hotkey Thread**: Global keyboard listening
-- **Record Thread**: Mouse position recording
-
-### Permissions
-The application requires system permissions for mouse/keyboard control. On some systems, you may need to:
-- Run as administrator (Windows)
-- Grant accessibility permissions (macOS)
-- Allow input monitoring (Linux)
-
-### Error Handling
-- Invalid input validation
-- Permission error messages
-- Graceful shutdown on errors
-
----
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
----
+- Thread-safe state management
+- Input validation on all settings
+- Emergency stop (ESC) always works
+- Clean resource shutdown
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT - See LICENSE file
+
 
 ---
 

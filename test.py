@@ -1,75 +1,55 @@
 #!/usr/bin/env python3
-"""
-Test script for Kliker
-Checks if all dependencies are installed and basic functionality works
-"""
+"""Test script for Kliker - checks dependencies and basic functionality"""
 
 def test_imports():
     """Test if all required modules can be imported"""
     try:
         import tkinter
-        print("✓ tkinter imported successfully")
-    except ImportError:
-        print("✗ tkinter not available")
-        return False
-
-    try:
         from pynput import mouse, keyboard
-        print("✓ pynput imported successfully")
-    except ImportError:
-        print("✗ pynput not available")
+        import threading, time
+        print("✓ All imports OK")
+        return True
+    except ImportError as e:
+        print(f"✗ Import failed: {e}")
         return False
 
+def test_state_module():
+    """Test ClickerState functionality"""
     try:
-        import threading
-        import time
-        print("✓ Standard library modules imported successfully")
-    except ImportError:
-        print("✗ Standard library modules not available")
-        return False
-
-    return True
-
-def test_basic_functionality():
-    """Test basic functionality without GUI"""
-    try:
-        from pynput import mouse, keyboard
-        from pynput.mouse import Button
-
-        # Test mouse controller
-        mouse_ctrl = mouse.Controller()
-        print("✓ Mouse controller created")
-
-        # Test keyboard controller
-        kb_ctrl = keyboard.Controller()
-        print("✓ Keyboard controller created")
-
-        # Test button mapping
-        button_map = {"left": Button.left, "right": Button.right, "middle": Button.middle}
-        print("✓ Button mapping works")
-
+        from clicker_state import ClickerState
+        state = ClickerState()
+        
+        # Test click counting
+        state.increment_clicks()
+        assert state.get_click_count() == 1, "Click count failed"
+        
+        # Test position recording
+        state.add_position(100, 200)
+        assert state.get_positions_count() == 1, "Position recording failed"
+        
+        # Test stats
+        stats = state.get_stats_snapshot()
+        assert 'total_clicks' in stats, "Stats snapshot failed"
+        
+        print("✓ State module OK")
         return True
     except Exception as e:
-        print(f"✗ Basic functionality test failed: {e}")
+        print(f"✗ State module failed: {e}")
         return False
 
 def main():
-    print("Testing Kliker dependencies and basic functionality...\n")
-
-    imports_ok = test_imports()
-    if not imports_ok:
-        print("\n❌ Import tests failed. Please install requirements:")
-        print("pip install -r requirements.txt")
-        return
-
-    print()
-    func_ok = test_basic_functionality()
-    if not func_ok:
-        print("\n❌ Functionality tests failed.")
-        return
-
-    print("\n✅ All tests passed! Kliker should work correctly.")
-    print("Note: GUI will require display server (X11 on Linux, etc.)")
+    print("Testing Kliker...\n")
+    
+    if not test_imports():
+        print("\nFix: pip install -r requirements.txt")
+        return False
+    
+    if not test_state_module():
+        return False
+    
+    print("\n✅ All tests passed!")
+    print("Run: python kliker.py")
+    return True
 
 if __name__ == "__main__":
-    main()
+    exit(0 if main() else 1)
