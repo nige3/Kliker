@@ -328,4 +328,4 @@ For major changes, open an issue first.
 
 Inspired by Blur AutoClicker.
 
-- https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa2UwRnhJeVBxVlRwU1J2YW5FenJMYXU5ZzRsZ3xBQ3Jtc0tsSjJuZWUxRGc5eExoak1hX3Rwc0sxeU9welB0UUxDaEZob19yejVpWm41VTJwOG5ldnNZaUZqc1BUaE11RGJSNk5FdTFUN3dXU0kzZ3pVNDJrNVMzdDZ4cE43aTE0bGRxTzFqZWdiUlJEVVFhRlNVMA&q=https%3A%2F%2Fgithub.com%2FBlur009%2FBlur-AutoClicker%2Freleases%2Flatest&v=SdEaZSCTTyI
+- https://github.com/Blur009/Blur-AutoClicker/releases/tag/v3.3.0
