@@ -43,9 +43,167 @@ Works out-of-the-box with zero configuration.
 
 ---
 
-## 🛠️ Requirements
+## 🛠️ Installation & Setup
 
-- Python 3.8+
+### Prerequisites
+- Python 3.8 or higher
+- pip (Python package installer)
+
+### Install Dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### Run the Application
+```bash
+python kliker.py
+```
+
+### Test Installation
+```bash
+python test.py
+```
+
+Or run the validation script:
+```bash
+python validate.py
+```
+
+### Expected Results
+- **With Display (GUI environment)**: All tests pass ✅
+- **Headless environment**: pynput shows warning ⚠️ (normal - requires X11)
+- **Core functionality**: Always works ✅
+
+That's it! The application will launch with a clean GUI ready to use.
+
+---
+
+## 📖 Usage Guide
+
+### Basic Operation
+1. **Select Mode**: Choose between "Realtime Clicking" or "Sequence Playback"
+2. **Configure Settings**:
+   - **Interval**: Time between clicks in milliseconds (minimum 10ms)
+   - **Click Count**: Number of clicks (0 = infinite until stopped)
+   - **Mouse Button**: Left, right, or middle click
+   - **Hotkey**: Key to start/stop (default: F6, restart required to change)
+3. **Start Clicking**: Click "▶ Start" or press your hotkey
+4. **Stop**: Click "⏹ Stop", press hotkey again, or press ESC for emergency stop
+
+### Realtime Mode
+- Clicks repeatedly at your current mouse cursor position
+- Perfect for games or repetitive clicking tasks
+
+### Sequence Mode
+1. **Record**: Click "⏺ Record" then click positions on screen
+2. **Stop Recording**: Click "⏹ Stop Recording" when done
+3. **Playback**: Click "▶ Start" to replay the sequence
+4. **Clear**: Use "🗑 Clear" to reset recorded positions
+
+### Presets
+- **Single Click**: 1000ms interval, 1 click
+- **Double Click**: 100ms interval, 2 clicks  
+- **Rapid Fire**: 50ms interval, infinite clicks
+
+### Safety Features
+- **ESC Key**: Emergency stop at any time
+- **Visual Indicator**: Red background when running
+- **Status Display**: Shows current state clearly
+
+---
+
+## 🏗️ Building Standalone Executable
+
+Kliker can be compiled into a standalone executable that runs without Python installed.
+
+### Using PyInstaller
+
+1. **Install PyInstaller**:
+   ```bash
+   pip install pyinstaller
+   ```
+
+2. **Create Executable**:
+   ```bash
+   pyinstaller --onefile --windowed --name=Kliker kliker.py
+   ```
+
+3. **Find the Executable**:
+   - Windows: `dist/Kliker.exe`
+   - macOS: `dist/Kliker.app`
+   - Linux: `dist/Kliker`
+
+### Alternative: cx_Freeze
+
+1. **Install cx_Freeze**:
+   ```bash
+   pip install cx-Freeze
+   ```
+
+2. **Create setup.py**:
+   ```python
+   from cx_Freeze import setup, Executable
+
+   setup(
+       name="Kliker",
+       version="1.0",
+       description="Auto Clicker Application",
+       executables=[Executable("kliker.py")],
+   )
+   ```
+
+3. **Build**:
+   ```bash
+   python setup.py build
+   ```
+
+---
+
+## 🔧 Technical Details
+
+### Libraries Used
+- **pynput**: Low-level mouse and keyboard control
+- **tkinter**: GUI framework (built-in Python)
+- **threading**: Multithreaded operation for responsive UI
+
+### Architecture
+- **Main Thread**: GUI and user interaction
+- **Click Thread**: Mouse automation (separate to prevent UI freezing)
+- **Hotkey Thread**: Global keyboard listening
+- **Record Thread**: Mouse position recording
+
+### Permissions
+The application requires system permissions for mouse/keyboard control. On some systems, you may need to:
+- Run as administrator (Windows)
+- Grant accessibility permissions (macOS)
+- Allow input monitoring (Linux)
+
+### Error Handling
+- Invalid input validation
+- Permission error messages
+- Graceful shutdown on errors
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Test thoroughly
+5. Submit a pull request
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## ⚠️ Disclaimer
+
+Use this tool responsibly. Automated clicking may violate terms of service for some applications or games. The authors are not responsible for any misuse or consequences.
 
 ---
 
@@ -170,3 +328,4 @@ For major changes, open an issue first.
 
 Inspired by Blur AutoClicker.
 
+- https://www.youtube.com/redirect?event=video_description&redir_token=QUFFLUhqa2UwRnhJeVBxVlRwU1J2YW5FenJMYXU5ZzRsZ3xBQ3Jtc0tsSjJuZWUxRGc5eExoak1hX3Rwc0sxeU9welB0UUxDaEZob19yejVpWm41VTJwOG5ldnNZaUZqc1BUaE11RGJSNk5FdTFUN3dXU0kzZ3pVNDJrNVMzdDZ4cE43aTE0bGRxTzFqZWdiUlJEVVFhRlNVMA&q=https%3A%2F%2Fgithub.com%2FBlur009%2FBlur-AutoClicker%2Freleases%2Flatest&v=SdEaZSCTTyI
